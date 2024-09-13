@@ -4,7 +4,8 @@
   "templateSha": "55d2364ce265d56b63dfa9664ac3ea93ee2aea96",
   "trustedNuGetFeeds": [
     {
-      "url": "https://dynamicssmb2.pkgs.visualstudio.com/DynamicsBCPublicFeeds/_packaging/AppSourceSymbols/nuget/v3/index.json"
+      "url": "https://dynamicssmb2.pkgs.visualstudio.com/DynamicsBCPublicFeeds/_packaging/AppSourceSymbols/nuget/v3/index.json",
+      "authTokenSecret": ""
     }
   ]
 }
