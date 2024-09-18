@@ -1,5 +1,22 @@
 {
   "type": "PTE",
   "templateUrl": "https://github.com/freddydk/AL-Go@nuget",
-  "templateSha": "55d2364ce265d56b63dfa9664ac3ea93ee2aea96"
+  "templateSha": "55d2364ce265d56b63dfa9664ac3ea93ee2aea96",
+  "trustedNuGetFeeds": [
+    {
+      "url": "https://dynamicssmb2.pkgs.visualstudio.com/DynamicsBCPublicFeeds/_packaging/AppSourceSymbols/nuget/v3/index.json"
+    },
+    {
+      "url": "https://nuget.pkg.github.com/freddydkorg/index.json",
+      "authTokenSecret": "ghTokenWorkflow"
+    },
+    {
+      "url": "https://api.nuget.org/v3/index.json",
+      "patterns": [ "microsoft.*" ]
+    },
+    {
+      "url": "https://api.nuget.org/v3/index.json",
+      "fingerprints": [ "3F9001EA83C560D712C24CF213C3D312CB3BFF51EE89435D3430BD06B5D0EECE" ]
+    }
+  ]
 }
