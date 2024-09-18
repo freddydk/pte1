@@ -8,7 +8,7 @@
     },
     {
       "url": "https://nuget.pkg.github.com/freddydkorg/index.json",
-      "authTokenSecret": "freddydkorgaccess"
+      "authTokenSecret": "ghTokenWorkflow"
     },
     {
       "url": "https://api.nuget.org/v3/index.json",
