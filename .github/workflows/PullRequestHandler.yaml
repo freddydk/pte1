@@ -28,15 +28,13 @@ jobs:
     if: (github.event.pull_request.base.repo.full_name != github.event.pull_request.head.repo.full_name) && (github.event_name != 'pull_request')
     runs-on: windows-latest
     steps:
-      - uses: freddydk/AL-Go/Actions/VerifyPRChanges@nuget
+      - uses: freddydk/AL-Go/Actions/VerifyPRChanges@downloaderr
 
   Initialization:
     needs: [ PregateCheck ]
     if: (!failure() && !cancelled())
     runs-on: [ windows-latest ]
     outputs:
-      githubRunner: ${{ steps.ReadSettings.outputs.GitHubRunnerJson }}
-      githubRunnerShell: ${{ steps.ReadSettings.outputs.GitHubRunnerShell }}
       projects: ${{ steps.determineProjectsToBuild.outputs.ProjectsJson }}
       projectDependenciesJson: ${{ steps.determineProjectsToBuild.outputs.ProjectDependenciesJson }}
       buildOrderJson: ${{ steps.determineProjectsToBuild.outputs.BuildOrderJson }}
@@ -45,7 +43,7 @@ jobs:
       telemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}
     steps:
       - name: Dump Workflow Information
-        uses: freddydk/AL-Go/Actions/DumpWorkflowInfo@nuget
+        uses: freddydk/AL-Go/Actions/DumpWorkflowInfo@downloaderr
         with:
           shell: powershell
 
@@ -57,13 +55,13 @@ jobs:
 
       - name: Initialize the workflow
         id: init
-        uses: freddydk/AL-Go/Actions/WorkflowInitialize@nuget
+        uses: freddydk/AL-Go/Actions/WorkflowInitialize@downloaderr
         with:
           shell: powershell
 
       - name: Read settings
         id: ReadSettings
-        uses: freddydk/AL-Go/Actions/ReadSettings@nuget
+        uses: freddydk/AL-Go/Actions/ReadSettings@downloaderr
         with:
           shell: powershell
 
@@ -74,7 +72,7 @@ jobs:
 
       - name: Determine Projects To Build
         id: determineProjectsToBuild
-        uses: freddydk/AL-Go/Actions/DetermineProjectsToBuild@nuget
+        uses: freddydk/AL-Go/Actions/DetermineProjectsToBuild@downloaderr
         with:
           shell: powershell
           maxBuildDepth: ${{ env.workflowDepth }}
@@ -90,8 +88,8 @@ jobs:
     uses: ./.github/workflows/_BuildALGoProject.yaml
     secrets: inherit
     with:
-      shell: ${{ needs.Initialization.outputs.githubRunnerShell }}
-      runsOn: ${{ needs.Initialization.outputs.githubRunner }}
+      shell: ${{ matrix.githubRunnerShell }}
+      runsOn: ${{ matrix.githubRunner }}
       checkoutRef: ${{ github.event_name == 'pull_request' && github.sha || format('refs/pull/{0}/merge', github.event.pull_request.number) }}
       project: ${{ matrix.project }}
       projectName: ${{ matrix.projectName }}
@@ -110,7 +108,7 @@ jobs:
     steps:
       - name: Pull Request Status Check
         id: PullRequestStatusCheck
-        uses: freddydk/AL-Go/Actions/PullRequestStatusCheck@nuget
+        uses: freddydk/AL-Go/Actions/PullRequestStatusCheck@downloaderr
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
@@ -118,7 +116,7 @@ jobs:
 
       - name: Finalize the workflow
         id: PostProcess
-        uses: freddydk/AL-Go/Actions/WorkflowPostProcess@nuget
+        uses: freddydk/AL-Go/Actions/WorkflowPostProcess@downloaderr
         if: success() || failure()
         env:
           GITHUB_TOKEN: ${{ github.token }}
